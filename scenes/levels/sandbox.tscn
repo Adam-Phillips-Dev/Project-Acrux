@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjch52fvl3sni"]
+
+[ext_resource type="Material" uid="uid://ceylw2c2t40st" path="res://assets/materials/grids/green_01.tres" id="1_rqmhi"]
+[ext_resource type="Material" uid="uid://5un1t50meafu" path="res://assets/materials/grids/orange_02.tres" id="2_sivsm"]
+[ext_resource type="PackedScene" uid="uid://qkap2jefrrv" path="res://scenes/player/player.tscn" id="3_6fpml"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yj7h1"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_af8e2"]
+sky_material = SubResource("ProceduralSkyMaterial_yj7h1")
+
+[sub_resource type="Environment" id="Environment_b61mh"]
+background_mode = 2
+sky = SubResource("Sky_af8e2")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Sandbox" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b61mh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="LevelGeometry" type="Node3D" parent="."]
+
+[node name="Ground" type="CSGBox3D" parent="LevelGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(100, 1, 100)
+material = ExtResource("1_rqmhi")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="LevelGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+material_override = ExtResource("2_sivsm")
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="LevelGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -3)
+material_override = ExtResource("2_sivsm")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[node name="Player" parent="." instance=ExtResource("3_6fpml")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
